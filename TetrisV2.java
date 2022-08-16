@@ -87,7 +87,7 @@ public class TetrisV2{
 						counter3++;
 						go_down=1;
 					}
-					else if(num==2 && y==board.length-1 || num==2 && y<board.length-1 && board[y+1][x]==1){  //Same code as last block just for different variation of block.
+					else if(num==2 && y==board.length-1 || num==2 && y<board.length-1 && board[y+1][x]==1 || num==2 && y<board.length-1 && x<board[0].length-1 && board[y+1][x+1]==1){  //Same code as last block just for different variation of block.
 						for(int j = 0; j<board[0].length;j++){
 							board[i][j]=0;
 						}
