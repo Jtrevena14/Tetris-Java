@@ -6,7 +6,8 @@ public class TetrisV2{
 		int[][] board = new int[9][6];
 		int y = 0,x=board[0].length/2;
 		int num = 1;
-		int counter=0,counter2=0,counter3=0,go_down=0,score=0;;
+		int holder=board.length-1;
+		int counter=0,counter2=0,counter3=0,go_down=0,score=0;
 		while(true){
 			if(counter%2==0){
 				num=1;             //1 is up and down, 2 is side to side.
@@ -86,6 +87,7 @@ public class TetrisV2{
 						}
 						counter3++;
 						go_down=1;
+
 					}
 					else if(num==2 && y==board.length-1 || num==2 && y<board.length-1 && board[y+1][x]==1 || num==2 && y<board.length-1 && x<board[0].length-1 && board[y+1][x+1]==1){  //Same code as last block just for different variation of block.
 						for(int j = 0; j<board[0].length;j++){
@@ -94,25 +96,46 @@ public class TetrisV2{
 						counter3++;
 						go_down=1;
 					}
+					holder=i;
 				}
 				counter2=0;
 			}
+			System.out.println(counter3);
 			if(go_down==1){
 				score+=counter3;
-				for(int i = board.length-1; i>=0;i--){    //Starting from the bottom up, check every single one on the board, and move it down by counter3 value, if there is only one line to break counter3 will equal 1, meaning all ones go down by 1 unit.
+				for(int i = holder; i>=0;i--){    //Starting from the bottom up, check every single one on the board, and move it down by counter3 value, if there is only one line to break counter3 will equal 1, meaning all ones go down by 1 unit.
 					for(int j = 0; j<board[0].length;j++){
-						if(board[i][j]==1 && i<board.length-1){
+						if(board[i][j]==1 && i<board.length-1){ //Hold the row that the clear is at and go up from there
 							board[i][j]=0;
 							board[i+counter3][j]=1;       //if 2 rows need to be cleared, means all ones on the board go down by 2 units because counter3 will equal 2.
 						}
 					}
 				}
 				counter3=0;
-				go_down=0;     //go_down = 0 to end the loop
+				go_down=0;    		 //go_down = 0 to end the loop
 				y=0;
 				x=board[0].length/2;
 			}
-
+			if(num==1){
+				if(y<board.length-1 && x>0 && board[y][x-1]==1 && a.equals("d")){   //If the current block has a one in the unit below and the user enters a d, set the previous position with zeros.
+					board[y-1][x-1]=0;
+					board[y][x-1]=0;
+				}
+				else if(y<board.length-1 && x<board[0].length-1 && board[y][x+1]==1 && a.equals("a")){   //if the correct block has a one below and user enters a set previous position with zeros.
+					board[y-1][x+1]=0;
+					board[y][x+1]=0;
+				}
+			}
+			else if(num==2){
+				if(y>0 && x>0 && (board[y][x-1]==1 || board[y][x]==1) && a.equals("d")){
+					board[y-1][x-1]=0;
+					board[y-1][x]=0;
+				}
+				else if(y<board.length-1 && y>0 && x<board[0].length-2 && (board[y][x+2]==1 || board[y][x]==1) && a.equals("a")){
+					board[y-1][x+1]=0;
+					board[y-1][x+2]=0;
+				}
+			}
 			for(int i = 0; i<board.length;i++){
 				for(int j = 0; j<board[0].length;j++){
 					System.out.print(board[i][j] + " " );       //Main display block to display the board to command prompt.
@@ -127,14 +150,6 @@ public class TetrisV2{
 					board[y][x]=1;
 					board[y+1][x]=1;
 				}
-				if(y<board.length-1 && x>0 && board[y][x-1]==1 && a.equals("d")){   //If the current block has a one in the unit below and the user enters a d, set the previous position with zeros.
-					board[y-1][x-1]=0;
-					board[y][x-1]=0;
-				}
-				else if(y<board.length-1 && x<board[0].length-1 && board[y][x+1]==1 && a.equals("a")){   //if the correct block has a one below and user enters a set previous position with zeros.
-					board[y-1][x+1]=0;
-					board[y][x+1]=0;
-				}
 			}
 			if(num==2){                 //Repeat of the last code in the side to side block variation.
 				board[y][x]=0;
@@ -142,14 +157,6 @@ public class TetrisV2{
 				if(y>=board.length-1 || (board[y+1][x]==1 || board[y+1][x+1]==1)){
 					board[y][x]=1;
 					board[y][x+1]=1;
-				}
-				if(y<board.length-1 && x>0 && (board[y][x-1]==1 || board[y][x]==1) && a.equals("d")){
-					board[y-1][x-1]=0;
-					board[y-1][x]=0;
-				}
-				else if(y<board.length-1 && x<board[0].length-2 && (board[y][x+2]==1 || board[y][x]==1) && a.equals("a")){
-					board[y-1][x+1]=0;
-					board[y-1][x+2]=0;
 				}
 			}
 		}
