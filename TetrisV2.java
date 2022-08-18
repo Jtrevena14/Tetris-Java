@@ -100,7 +100,30 @@ public class TetrisV2{
 				}
 				counter2=0;
 			}
-			System.out.println(counter3);
+
+			if(num==1){
+				if(y<board.length-1 && x>0 && board[y][x-1]==1 && a.equals("d")){   //If the current block has a one in the unit below and the user enters a d, set the previous position with zeros.
+						board[y-1][x-1]=0;
+						board[y][x-1]=0;
+				}
+				else if(y<board.length-1 && x<board[0].length-1 && board[y][x+1]==1 && a.equals("a")){   //if the correct block has a one below and user enters a set previous position with zeros.
+						board[y-1][x+1]=0;
+						board[y][x+1]=0;
+				}
+			}
+			else if(num==2){
+				if(y>0 && x>0 && a.equals("d")){
+					board[y-1][x-1]=0;
+					board[y-1][x]=0;
+					System.out.println("GO");
+				}
+				else if(y<board.length && y>0 && x<board[0].length-2 && a.equals("a")){
+					board[y-1][x+1]=0;
+					board[y-1][x+2]=0;
+					System.out.println("GO");
+				}
+			}
+
 			if(go_down==1){
 				score+=counter3;
 				for(int i = holder; i>=0;i--){    //Starting from the bottom up, check every single one on the board, and move it down by counter3 value, if there is only one line to break counter3 will equal 1, meaning all ones go down by 1 unit.
@@ -111,31 +134,14 @@ public class TetrisV2{
 						}
 					}
 				}
+
 				counter3=0;
-				go_down=0;    		 //go_down = 0 to end the loop
+				go_down=0;            //go_down = 0 to end the loop
 				y=0;
 				x=board[0].length/2;
 			}
-			if(num==1){
-				if(y<board.length-1 && x>0 && board[y][x-1]==1 && a.equals("d")){   //If the current block has a one in the unit below and the user enters a d, set the previous position with zeros.
-					board[y-1][x-1]=0;
-					board[y][x-1]=0;
-				}
-				else if(y<board.length-1 && x<board[0].length-1 && board[y][x+1]==1 && a.equals("a")){   //if the correct block has a one below and user enters a set previous position with zeros.
-					board[y-1][x+1]=0;
-					board[y][x+1]=0;
-				}
-			}
-			else if(num==2){
-				if(y>0 && x>0 && (board[y][x-1]==1 || board[y][x]==1) && a.equals("d")){
-					board[y-1][x-1]=0;
-					board[y-1][x]=0;
-				}
-				else if(y<board.length-1 && y>0 && x<board[0].length-2 && (board[y][x+2]==1 || board[y][x]==1) && a.equals("a")){
-					board[y-1][x+1]=0;
-					board[y-1][x+2]=0;
-				}
-			}
+
+
 			for(int i = 0; i<board.length;i++){
 				for(int j = 0; j<board[0].length;j++){
 					System.out.print(board[i][j] + " " );       //Main display block to display the board to command prompt.
