@@ -115,12 +115,10 @@ public class TetrisV2{
 				if(y>0 && x>0 && a.equals("d")){
 					board[y-1][x-1]=0;
 					board[y-1][x]=0;
-					System.out.println("GO");
 				}
 				else if(y<board.length && y>0 && x<board[0].length-2 && a.equals("a")){
 					board[y-1][x+1]=0;
 					board[y-1][x+2]=0;
-					System.out.println("GO");
 				}
 			}
 
